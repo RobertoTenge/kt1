@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Случайные числа в таблице</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            width: 50px;
+            height: 50px;
+        }
+        .high-value {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Таблица случайных чисел</h1>
+    <div id="table-container" style="text-align: center;"></div>
+    <button onclick="addRandomNumber()">Добавить число</button>
+
+    <script>
+        
+        const randomNumbers = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
+
+        
+        function createTable(numbers) {
+            const table = document.createElement('table');
+            let index = 0;
+
+            for (let row = 0; row < 5; row++) {
+                const tr = document.createElement('tr');
+
+                for (let col = 0; col < 6; col++) {
+                    const td = document.createElement('td');
+                    td.textContent = numbers[index];
+                    if (numbers[index] >= 50) {
+                        td.classList.add('high-value');
+                    }
+                    tr.appendChild(td);
+                    index++;
+                }
+                table.appendChild(tr);
+            }
+            document.getElementById('table-container').appendChild(table);
+        }
+
+        
+        function addRandomNumber() {
+            const newNumber = Math.floor(Math.random() * 100);
+            const table = document.querySelector('table');
+            const lastRow = table.rows[table.rows.length - 1];
+
+            
+            if (lastRow.cells.length < 6) {
+                const td = document.createElement('td');
+                td.textContent = newNumber;
+                if (newNumber >= 50) {
+                    td.classList.add('high-value');
+                }
+                lastRow.appendChild(td);
+            } else {
+                
+                const newTr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.textContent = newNumber;
+                if (newNumber >= 50) {
+                    td.classList.add('high-value');
+                }
+                newTr.appendChild(td);
+                table.appendChild(newTr);
+            }
+        }
+
+        
+        createTable(randomNumbers);
+    </script>
+</body>
+</html>
